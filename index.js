@@ -1650,6 +1650,9 @@ var nucc = msg.body.split("!nh ")[1];
 request('http://3.80.205.249/' + nucc, function (error, response, body) {
 const data = JSON.parse(body);
 
+if (data.title == null) {msg.reply("Kode Tidak Ditemukan. Coba kode lain seperti 177013")}
+else {
+
 if (data.details.parodies == null) {var parodi = 'original' }
 else {var parodi = data.details.parodies.join().replace((/[0-9]/g), "")};
 if (data.details.artists == null) {var pembuat = 'tidak diketahui' }
@@ -1679,6 +1682,7 @@ let media = MessageMedia.fromFilePath('cover.jpg');
 
     console.log(`stdout: ${stdout}`);
 });
+};
 });
 }
 
