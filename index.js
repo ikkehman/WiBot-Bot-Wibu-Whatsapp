@@ -228,6 +228,7 @@ client.on("message", async msg => {
   console.log(` ${chat} 
   participant
   `)
+  msg.body = msg.body.toLowerCase()
 const botTol = () => {
         msg.reply('[!] Maaf, fitur ini hanya untuk admin(owner).')
         return
@@ -342,7 +343,7 @@ const botTol = () => {
     // Send a new message as a reply to the current one
     msg.reply("kirim !menu atau !help untuk melihat menu.");
   }
-  else if (msg.body == "!ping reply") {
+  else if (msg.body == "!ping") {
     // Send a new message as a reply to the current one
     msg.reply("pong");
   }else if (msg.body.startsWith("!anime")) {
