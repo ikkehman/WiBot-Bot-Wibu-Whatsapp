@@ -230,11 +230,11 @@ client.on("message", async msg => {
   `)
   msg.body = msg.body.toLowerCase()
 const botTol = () => {
-        msg.reply('[!] Maaf, fitur ini hanya untuk admin(owner).')
+        msg.reply('🚫 Maaf, fitur ini hanya untuk admin(owner).')
         return
     }
     const botTol2 = () => {
-        msg.reply(`[!] Maaf, fitur ini hanya untuk 'Group Chat'.`)
+        msg.reply(`🚫 Maaf, fitur ini hanya untuk 'Group Chat'.`)
         return
     }
 
@@ -321,6 +321,22 @@ const botTol = () => {
             if (dariGC.replace('@c.us', '') == chat.owner.user) {
                 let title = msg.mentionedIds
                 chat.removeParticipants([...title])
+                // console.log([...title]);
+            } else {
+                botTol()
+            }
+        } else {
+            botTol2()
+        }
+    } else if (msg.body == '!delete' && msg.hasQuotedMsg) {
+        if (chat.isGroup) {
+            if (dariGC.replace('@c.us', '') == chat.owner.user) {
+              const quotedMsg = await msg.getQuotedMessage();
+              if (quotedMsg.fromMe) {
+                  quotedMsg.delete(true);
+              } else {
+                  msg.reply('Hanya bisa menghapus pesan dari saya sendiri');
+              }
                 // console.log([...title]);
             } else {
                 botTol()
