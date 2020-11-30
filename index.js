@@ -139,7 +139,7 @@ client.on('group_join', async (notification) => {
     console.log('join', notification);
     const botno = notification.chatId.split('@')[0];
     let number = await notification.id.remote;
-    client.sendMessage(number, `Hai perkenalkan aku WiBot, selamat datang di group ini`);
+    client.sendMessage(number, `Hai perkenalkan aku WiBot, selamat datang di group ini. Harap baca deskripsi dan ketik !menu`);
   
     const chats = await client.getChats();
     for (i in chats) {
@@ -156,13 +156,6 @@ client.on('group_join', async (notification) => {
         const contact = await client.getContactById(participant.id._serialized);
         participants[contact.pushname] = participant.id.user;
         // participant needs to send a message for it to be defined
-        if (participant.isAdmin) {
-            //admins.push(participant.id.user);
-            admins[contact.pushname] = participant.id.user;
-            client.sendMessage(participant.id._serialized, 'Hai admin, ada member baru di group mu');
-            const media = MessageMedia.fromFilePath('./test/test.pdf');
-            client.sendMessage(participant.id._serialized, media);
-        }
     }
     console.log('Group Details');
     console.log('Name: ', chat.name);
@@ -193,13 +186,6 @@ client.on('group_leave', async (notification) => {
         const contact = await client.getContactById(participant.id._serialized);
         participants[contact.pushname] = participant.id.user;
         // participant needs to send a message for it to be defined
-        if (participant.isAdmin) {
-            //admins.push(participant.id.user);
-            admins[contact.pushname] = participant.id.user;
-            client.sendMessage(participant.id._serialized, 'Hai admin, ada member yang keluar di group mu');
-            const media = MessageMedia.fromFilePath('./test/test.pdf');
-            client.sendMessage(participant.id._serialized, media);
-        }
     }
     console.log('Group Details');
     console.log('Name: ', chat.name);
@@ -230,7 +216,7 @@ client.on("message", async msg => {
   `)
   msg.body = msg.body.toLowerCase()
 const botTol = () => {
-        msg.reply('🚫 Maaf, fitur ini hanya untuk admin(owner).')
+        msg.reply('🚫 Maaf, fitur ini hanya untuk admin (owner).')
         return
     }
     const botTol2 = () => {
@@ -328,7 +314,8 @@ const botTol = () => {
         } else {
             botTol2()
         }
-    } else if (msg.body == '!delete' && msg.hasQuotedMsg) {
+    } else if (msg.body == '!delete') {
+      if (msg.hasQuotedMsg) {
         if (chat.isGroup) {
             if (dariGC.replace('@c.us', '') == chat.owner.user) {
               const quotedMsg = await msg.getQuotedMessage();
@@ -344,16 +331,34 @@ const botTol = () => {
         } else {
             botTol2()
         }
+      } else {
+        msg.reply('Reply pesan yang ingin dihapus dengan caption !delete');
+    }
     } else if (msg.body == '!owner') {
         if (chat.isGroup) {
-            msg.reply(JSON.stringify({
-                owner: chat.owner.user
-            }))
+            msg.reply(
+              '@'+chat.owner.user
+            )
         } else {
             botTol2()
         }
     } 
 
+    else if (msg.body == '!mention') {
+      
+      const chat = await msg.getChat();
+
+        let text = "";
+        let mentions = [];
+            const contact = await client.getContactById(chat.owner.user._serialized);
+
+            mentions.push(contact);
+      text += "Hai ";
+            text += `@${chat.owner.user.user} `;
+      text += "\n";
+
+        chat.sendMessage(text, { mentions });
+  }
 
   if (msg.type == "ciphertext") {
     // Send a new message as a reply to the current one
@@ -705,25 +710,70 @@ Hai Kak 😊` });
 
 //test 4
 
-else if (msg.body == "!menu" || msg.body == "!help") {
- const contact = await msg.getContact()
-        const nama = contact.pushname !== undefined ? `Hai, kak ${contact.pushname} 😃` : 'Hai 😃'
+else if (msg.body.startsWith('!admin')) {
+  if (chat.isGroup) {
+      if (dariGC.replace('@c.us', '') == chat.owner.user) {
         client.sendMessage(msg.from, `
-${nama}
-kenalin aku WiBot! 😂 robot buat para Wibu.
-*DAFTAR PERINTAH*
-!menu / !help  =>  Menampilkan menu utama
-!ping  =>  pong
-!nh (kode) misalnya !nh 177013 => melihat informasi kode nuklir.
-!wait  =>  mencari judul anime
-!sauce => mencari sumber fanart, manga, doujin
-!randomanime  =>  gambar anime random
-!randomhentai  =>  gambar Hentai random
-!penyegar  =>  penyegar timeline.
-Made with hateful, crazy and desperate 🤪 by Bobby`)
+        ${nama}
+        *DAFTAR PERINTAH ADMIN*
+        !menu / !help  =>  Menampilkan menu utama
+        !ping  =>  pong
+        !delete kemudian reply => menghapus pesan milik bot
+        !deskripsi (masukan deskripsi)=>  mengganti deskripsi grup
+        !promote (nomor) => menjadikan member admin
+        !add (nomor)  =>  add member
+        Made with hateful, crazy and desperate 🤪 by Bobby`)
+      } else {
+          botTol()
+      }
+  } else {
+      botTol2()
+  }
 }
 
 //end test 4
+
+//start tes 5
+
+if (msg.body.startsWith('!menu' || msg.body == "!help")) {
+  const contact = await msg.getContact()
+  const nama = contact.pushname !== undefined ? `Hai, kak ${contact.pushname} 😃` : 'Hai 😃'
+  if (chat.isGroup) {
+    client.sendMessage(msg.from, `
+    ${nama}
+    kenalin aku WiBot! 😂 robot buat para Wibu.
+
+    *DAFTAR PERINTAH ADMIN*
+    !admin  =>  Menampilkan menu untuk admin
+
+    *DAFTAR PERINTAH MEMBER*
+    !menu / !help  =>  Menampilkan menu utama
+    !ping  =>  pong
+    !nh (kode) misalnya !nh 177013 => melihat informasi kode nuklir.
+    !wait  =>  mencari judul anime
+    !sauce => mencari sumber fanart, manga, doujin
+    !randomanime  =>  gambar anime random
+    !randomhentai  =>  gambar Hentai random
+    !penyegar  =>  penyegar timeline.
+    Made with hateful, crazy and desperate 🤪 by Bobby`)
+    } else {
+      client.sendMessage(msg.from, `
+      ${nama}
+      kenalin aku WiBot! 😂 robot buat para Wibu.
+      *DAFTAR PERINTAH*
+      !menu / !help  =>  Menampilkan menu utama
+      !ping  =>  pong
+      !nh (kode) misalnya !nh 177013 => melihat informasi kode nuklir.
+      !wait  =>  mencari judul anime
+      !sauce => mencari sumber fanart, manga, doujin
+      !randomanime  =>  gambar anime random
+      !randomhentai  =>  gambar Hentai random
+      !penyegar  =>  penyegar timeline.
+      Made with hateful, crazy and desperate 🤪 by Bobby`)
+  }
+}
+
+//end test 5 
 
   else if (msg.body.startsWith("!sendto ")) {
     // Direct send a new message to specific id
