@@ -412,7 +412,7 @@ Ejaan Judul : *${result.docs[0].title_romaji}*
 Episode : *${result.docs[0].episode}*
 Tayang Perdana  : *${result.docs[0].season}*
 
-(Jika tingkat kecocokan dibawah 85%, kemungkinan salah)
+(Jika tingkat kecocokan dibawah 85%, kemungkinan salah. Pastikan gambar yang anda kirim adalah gambar scene anime.)
 `;
 var video = `https://trace.moe/thumbnail.php?anilist_id=${result.docs[0].anilist_id}&file=${encodeURIComponent(result.docs[0].filename)}&t=${result.docs[0].at}&token=${result.docs[0].tokenthumb}`;
 exec('wget "' + video + '" -O anime.jpg', (error, stdout, stderr) => {
@@ -445,7 +445,7 @@ else{
     const tutor = MessageMedia.fromFilePath('tutor.jpeg');
 
     client.sendMessage(msg.from, tutor, {
-        caption: "Kirim gambar dengan caption *!wait* \n sesuai gambar diatas lalu tunggu sampai \n kita menemukan hasilnya"
+        caption: "Kirim gambar dengan caption *!wait* sesuai gambar diatas lalu tunggu sampai kita menemukan hasilnya dan pastikan gambar yang anda kirim adalah gambar scene anime seperti contoh. \n BUKAN FAN ART!!!"
       });
     }
 }
@@ -793,8 +793,8 @@ if (msg.body.startsWith('!menu' || msg.body == "!help")) {
   else if (msg.body == "save dong" || msg.body == "save donk" || msg.body == "Save ya" || msg.body == "Save") {
     client.sendMessage(msg.from, "Ogah")
   }
-  else if (msg.body == "kamu bot?" || msg.body == "kamu robot"|| msg.body == "bot ya") {
-    client.sendMessage(msg.from, "ya")
+  else if (msg.body == "kamu bot?" || msg.body == "kamu robot"|| msg.body == "bot ya" || msg.body == "kamu bot") {
+    client.sendMessage(msg.from, "iya")
   }
  else if (msg.body == "p" ||
     msg.body === "assalamualaikum") {
