@@ -8,6 +8,7 @@ const listen = mqtt.connect("mqtt://test.mosquitto.org");
 const fetch = require("node-fetch"); 
 const puppeteer = require("puppeteer");
 const cheerio = require("cheerio");
+const sendSticker = require('./sendSticker')
 const SESSION_FILE_PATH = "./session.json";
 // file is included here
 let sessionCfg;
@@ -794,6 +795,39 @@ if (msg.body.startsWith('!menu' || msg.body == "!help")) {
     // Send a new message to the same chat
     client.sendMessage(msg.from, "Iya?");
   } 
+
+  //usaha
+
+  else if (msg.body == "!sticker" || msg.body === "!stiker") {
+  
+    if (isMedia && type == 'video') {
+      if (message.duration < 15) {
+        sendSticker.sendAnimatedSticker(message)
+       } else {
+         await client.reply(from, 'The given file is too large for converting', id)
+}
+    } else if (isMedia && type == 'image') {
+      const mediaData = await decryptMedia(message)
+      const imageBase64 = `data:${mimetype};base64,${mediaData.toString('base64')}`
+      const baseImg = imageBase64.replace('video/mp4','image/gif')
+      await client.sendImageAsSticker(from, baseImg)
+  } else if (quotedMsg && quotedMsg.type == 'image') {
+    const mediaData = await decryptMedia(quotedMsg)
+    const imageBase64 = `data:${quotedMsg.mimetype};base64,${mediaData.toString('base64')}`
+    await client.sendImageAsSticker(from, imageBase64)
+} else if (quotedMsg && quotedMsg.type == 'video') {
+           if (quotedMsg.duration < 15) {
+          sendSticker.sendAnimatedSticker(quotedMsgObj)
+          } else {
+          await client.reply(from, 'The given file is too large for converting', id)
+          } 
+} else {
+  client.reply(from, 'You did not tag a picture or video, Baka', message.id)
+  }
+    
+  }
+  //end usaha
+
 
 });
 
