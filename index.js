@@ -450,13 +450,6 @@ else{
     }
 }
 
-   else if (msg.body == "#donasi" ||
-    msg.body === "donasi ") {
-    // Send a new message to the same chat
-    client.sendMessage(msg.from, ` 
-  null
-  `);
-  }
      else if (msg.body == "!rules" ||
     msg.body === "rules ") {
     // Send a new message to the same chat
