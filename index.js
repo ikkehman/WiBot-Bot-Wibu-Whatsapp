@@ -799,14 +799,25 @@ if (msg.body.startsWith('!menu' || msg.body == "!help")) {
   //usaha
 
   else if (msg.body == "!sticker" || msg.body === "!stiker") {
-  
-    if (isMedia && type == 'video') {
+        const { type, id, from, t, sender, isGroupMsg, chat, chatId, caption, isMedia, mimetype, quotedMsg, mentionedJidList, author, quotedMsgObj }
+        let { body }
+        const { name } = chat
+        let { pushname, verifiedName } = sender
+        const prefix = '#'
+        body = (type === 'chat' && body.startsWith(prefix)) ? body : ((type === 'image' && caption || type === 'video' && caption) && caption.startsWith(prefix)) ? caption : ''
+        const command = body.slice(prefix.length).trim().split(/ +/).shift().toLowerCase()
+        const args = body.slice(prefix.length).trim().split(/ +/).slice(1)
+        const isCmd = body.startsWith(prefix)
+  const isRule = ruleArr.includes(chat.id)
+        const time = moment(t * 1000).format('DD/MM HH:mm:ss')
+    const { create } = require('@open-wa/wa-automate')
+    if (msg.hasMedia && type == 'video') {
       if (message.duration < 15) {
         sendSticker.sendAnimatedSticker(message)
        } else {
-         await client.reply(from, 'The given file is too large for converting', id)
+         await msg.reply('The given file is too large for converting')
 }
-    } else if (isMedia && type == 'image') {
+    } else if (msg.hasMedia && type == 'image') {
       const mediaData = await decryptMedia(message)
       const imageBase64 = `data:${mimetype};base64,${mediaData.toString('base64')}`
       const baseImg = imageBase64.replace('video/mp4','image/gif')
@@ -819,10 +830,10 @@ if (msg.body.startsWith('!menu' || msg.body == "!help")) {
            if (quotedMsg.duration < 15) {
           sendSticker.sendAnimatedSticker(quotedMsgObj)
           } else {
-          await client.reply(from, 'The given file is too large for converting', id)
+          await msg.reply('The given file is too large for converting')
           } 
 } else {
-  client.reply(from, 'You did not tag a picture or video, Baka', message.id)
+  msg.reply('You did not tag a picture or video, Baka')
   }
     
   }
