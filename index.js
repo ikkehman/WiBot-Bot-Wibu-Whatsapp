@@ -702,32 +702,7 @@ Hai Kak 😊` });
     }
 //end test 3
 
-//test 4
-
-else if (msg.body.startsWith('!admin')) {
-  if (chat.isGroup) {
-      if (dariGC.replace('@c.us', '') == chat.owner.user) {
-        client.sendMessage(msg.from, `
-        ${nama}
-        *DAFTAR PERINTAH ADMIN*
-        !menu / !help  =>  Menampilkan menu utama
-        !ping  =>  pong
-        !delete kemudian reply => menghapus pesan milik bot
-        !deskripsi (masukan deskripsi)=>  mengganti deskripsi grup
-        !promote (nomor) => menjadikan member admin
-        !add (nomor)  =>  add member
-        Made with hateful, crazy and desperate 🤪 by Bobby`)
-      } else {
-          botTol()
-      }
-  } else {
-      botTol2()
-  }
-}
-
-//end test 4
-
-//start tes 5
+//start tes 4
 
 if (msg.body.startsWith('!menu' || msg.body == "!help")) {
   const contact = await msg.getContact()
@@ -738,7 +713,12 @@ if (msg.body.startsWith('!menu' || msg.body == "!help")) {
     kenalin aku WiBot! 😂 robot buat para Wibu.
 
     *DAFTAR PERINTAH ADMIN*
-    !admin  =>  Menampilkan menu untuk admin
+    (hanya untuk admin yang invite wibot)
+
+    !delete kemudian reply => menghapus pesan milik bot
+    !deskripsi (masukan deskripsi)=>  mengganti deskripsi grup
+    !promote (nomor) => menjadikan member admin
+    !add (nomor)  =>  add member
 
     *DAFTAR PERINTAH MEMBER*
     !menu / !help  =>  Menampilkan menu utama
@@ -749,11 +729,13 @@ if (msg.body.startsWith('!menu' || msg.body == "!help")) {
     !randomanime  =>  gambar anime random
     !randomhentai  =>  gambar Hentai random
     !penyegar  =>  penyegar timeline.
-    Made with hateful, crazy and desperate 🤪 by Bobby`)
+
+    Made with hateful, crazy and desperate 🤪 by IkkehMan`)
     } else {
       client.sendMessage(msg.from, `
       ${nama}
       kenalin aku WiBot! 😂 robot buat para Wibu.
+
       *DAFTAR PERINTAH*
       !menu / !help  =>  Menampilkan menu utama
       !ping  =>  pong
@@ -763,11 +745,11 @@ if (msg.body.startsWith('!menu' || msg.body == "!help")) {
       !randomanime  =>  gambar anime random
       !randomhentai  =>  gambar Hentai random
       !penyegar  =>  penyegar timeline.
-      Made with hateful, crazy and desperate 🤪 by Bobby`)
+      Made with hateful, crazy and desperate 🤪 by IkkehMan`)
   }
 }
 
-//end test 5 
+//end test 4 
 
   else if (msg.body.startsWith("!sendto ")) {
     // Direct send a new message to specific id
@@ -780,7 +762,7 @@ if (msg.body.startsWith('!menu' || msg.body == "!help")) {
     client.sendMessage(number, message);
   }
   else if (msg.body == "iya?" ||
-    msg.body === "iya") {
+    msg.body === "hai") {
     // Send a new message to the same chat
     client.sendMessage(msg.from, "Gabut bangettt sihhh ngechat bot.. 🤭");
   }
@@ -795,49 +777,6 @@ if (msg.body.startsWith('!menu' || msg.body == "!help")) {
     // Send a new message to the same chat
     client.sendMessage(msg.from, "Iya?");
   } 
-
-  //usaha
-
-  else if (msg.body == "!sticker" || msg.body === "!stiker") {
-        const { type, id, from, t, sender, isGroupMsg, chat, chatId, caption, isMedia, mimetype, quotedMsg, mentionedJidList, author, quotedMsgObj }
-        let { body }
-        const { name } = chat
-        let { pushname, verifiedName } = sender
-        const prefix = '#'
-        body = (type === 'chat' && body.startsWith(prefix)) ? body : ((type === 'image' && caption || type === 'video' && caption) && caption.startsWith(prefix)) ? caption : ''
-        const command = body.slice(prefix.length).trim().split(/ +/).shift().toLowerCase()
-        const args = body.slice(prefix.length).trim().split(/ +/).slice(1)
-        const isCmd = body.startsWith(prefix)
-  const isRule = ruleArr.includes(chat.id)
-        const time = moment(t * 1000).format('DD/MM HH:mm:ss')
-    const { create } = require('@open-wa/wa-automate')
-    if (msg.hasMedia && type == 'video') {
-      if (message.duration < 15) {
-        sendSticker.sendAnimatedSticker(message)
-       } else {
-         await msg.reply('The given file is too large for converting')
-}
-    } else if (msg.hasMedia && type == 'image') {
-      const mediaData = await decryptMedia(message)
-      const imageBase64 = `data:${mimetype};base64,${mediaData.toString('base64')}`
-      const baseImg = imageBase64.replace('video/mp4','image/gif')
-      await client.sendImageAsSticker(from, baseImg)
-  } else if (quotedMsg && quotedMsg.type == 'image') {
-    const mediaData = await decryptMedia(quotedMsg)
-    const imageBase64 = `data:${quotedMsg.mimetype};base64,${mediaData.toString('base64')}`
-    await client.sendImageAsSticker(from, imageBase64)
-} else if (quotedMsg && quotedMsg.type == 'video') {
-           if (quotedMsg.duration < 15) {
-          sendSticker.sendAnimatedSticker(quotedMsgObj)
-          } else {
-          await msg.reply('The given file is too large for converting')
-          } 
-} else {
-  msg.reply('You did not tag a picture or video, Baka')
-  }
-    
-  }
-  //end usaha
 
 
 });
