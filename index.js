@@ -8,7 +8,8 @@ const listen = mqtt.connect("mqtt://test.mosquitto.org");
 const fetch = require("node-fetch"); 
 const puppeteer = require("puppeteer");
 const cheerio = require("cheerio");
-const sendSticker = require('./sendSticker')
+const sendSticker = require('./sendSticker');
+const dl = require("./lib/downloadImage.js");
 const SESSION_FILE_PATH = "./session.json";
 // file is included here
 let sessionCfg;
@@ -745,6 +746,25 @@ Made with hateful, crazy and desperate 🤪 by IkkehMan`)
 }
 
 //end test 4 
+
+//start test 5
+  else if (caption == '!sticker')
+      {
+         const buffer = await conn.downloadMediaMessage(m) 
+         const stiker = await conn.downloadAndSaveMediaMessage(m) // to decrypt & save to file
+
+         const
+         {
+            exec
+         } = require("child_process");
+         exec('cwebp -q 50 ' + stiker + ' -o anime/' + jam + '.webp', (error, stdout, stderr) =>
+         {
+            let stik = fs.readFileSync('anime/' + jam + '.webp')
+            conn.sendMessage(id, stik, MessageType.sticker)
+         });
+      }
+
+//end test 5
 
    else if (msg.body.startsWith("!sendto ")) {
     // Direct send a new message to specific id
