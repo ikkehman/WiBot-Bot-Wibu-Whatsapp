@@ -217,7 +217,7 @@ client.on("message", async msg => {
   `)
   msg.body = msg.body.toLowerCase()
 const botTol = () => {
-        msg.reply('🚫 Maaf, fitur ini hanya untuk admin (owner).')
+        msg.reply('🚫 Maaf, fitur ini hanya untuk admin (owner) yang invite WiBot.')
         return
     }
     const botTol2 = () => {
@@ -636,7 +636,7 @@ var teks = `*Judul*: ${isiy.source}
 var teks = `*Judul*: ${isiy.title} 
 *Kemiripan*: ${isix.similarity}%
 *Pembuat*: ${isiy.member_name}
-*Link Sauce*: ${isiy.ext_urls[0]}`
+*Link Gambar HD*: ${isiy.ext_urls[0]}`
 }
 
 var video = isix.thumbnail;
@@ -756,7 +756,7 @@ Made with hateful, crazy and desperate 🤪 by IkkehMan`)
     chat.sendSeen();
     client.sendMessage(number, message);
   }
-  else if (msg.body == "iya?" ||
+  else if (msg.body == "hi" ||
     msg.body === "hai") {
     // Send a new message to the same chat
     client.sendMessage(msg.from, "Gabut bangettt sihhh ngechat bot.. 🤭");
