@@ -704,23 +704,21 @@ Hai Kak 😊` });
 
 //start tes 4
 
-if (msg.body.startsWith('!menu' || msg.body == "!help")) {
+if (msg.body.startsWith('!menu')) {
   const contact = await msg.getContact()
   const nama = contact.pushname !== undefined ? `Hai, kak ${contact.pushname} 😃` : 'Hai 😃'
   if (chat.isGroup) {
-    client.sendMessage(msg.from, `
-    ${nama}
-    kenalin aku WiBot! 😂 robot buat para Wibu.
+    client.sendMessage(msg.from, ` ${nama} Kenalin aku WiBot! 😂 robot buat para Wibu.
 
-    *DAFTAR PERINTAH ADMIN*
-    (hanya untuk admin yang invite wibot)
+*DAFTAR PERINTAH ADMIN*
+(hanya untuk admin yang invite wibot)
 
     !delete kemudian reply => menghapus pesan milik bot
     !deskripsi (masukan deskripsi)=>  mengganti deskripsi grup
     !promote (nomor) => menjadikan member admin
     !add (nomor)  =>  add member
 
-    *DAFTAR PERINTAH MEMBER*
+*DAFTAR PERINTAH MEMBER*
     !menu / !help  =>  Menampilkan menu utama
     !ping  =>  pong
     !nh (kode) misalnya !nh 177013 => melihat informasi kode nuklir.
@@ -729,23 +727,20 @@ if (msg.body.startsWith('!menu' || msg.body == "!help")) {
     !randomanime  =>  gambar anime random
     !randomhentai  =>  gambar Hentai random
     !penyegar  =>  penyegar timeline.
-
-    Made with hateful, crazy and desperate 🤪 by IkkehMan`)
+Made with hateful, crazy and desperate 🤪 by IkkehMan`)
     } else {
-      client.sendMessage(msg.from, `
-      ${nama}
-      kenalin aku WiBot! 😂 robot buat para Wibu.
+      client.sendMessage(msg.from, ` ${nama} Kenalin aku WiBot! 😂 robot buat para Wibu.
 
-      *DAFTAR PERINTAH*
-      !menu / !help  =>  Menampilkan menu utama
-      !ping  =>  pong
-      !nh (kode) misalnya !nh 177013 => melihat informasi kode nuklir.
-      !wait  =>  mencari judul anime
-      !sauce => mencari sumber fanart, manga, doujin
-      !randomanime  =>  gambar anime random
-      !randomhentai  =>  gambar Hentai random
-      !penyegar  =>  penyegar timeline.
-      Made with hateful, crazy and desperate 🤪 by IkkehMan`)
+*DAFTAR PERINTAH*
+    !menu / !help  =>  Menampilkan menu utama
+    !ping  =>  pong
+    !nh (kode) misalnya !nh 177013 => melihat informasi kode nuklir.
+    !wait  =>  mencari judul anime
+    !sauce => mencari sumber fanart, manga, doujin
+    !randomanime  =>  gambar anime random
+    !randomhentai  =>  gambar Hentai random
+    !penyegar  =>  penyegar timeline.
+Made with hateful, crazy and desperate 🤪 by IkkehMan`)
   }
 }
 
@@ -776,6 +771,10 @@ if (msg.body.startsWith('!menu' || msg.body == "!help")) {
     msg.body === "assalamualaikum") {
     // Send a new message to the same chat
     client.sendMessage(msg.from, "Iya?");
+  } 
+   else if (msg.body == "!help") {
+    // Send a new message to the same chat
+    client.sendMessage(msg.from, "Ketik !menu untuk melihat menu");
   } 
 
 
