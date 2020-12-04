@@ -746,7 +746,7 @@ Made with hateful, crazy and desperate 🤪 by IkkehMan`)
 
 //end test 4 
 
-  else if (msg.body.startsWith("!sendto ")) {
+   else if (msg.body.startsWith("!sendto ")) {
     // Direct send a new message to specific id
     let number = msg.body.split(" ")[1];
     let messageIndex = msg.body.indexOf(number) + number.length;
@@ -767,15 +767,18 @@ Made with hateful, crazy and desperate 🤪 by IkkehMan`)
   else if (msg.body == "kamu bot?" || msg.body == "kamu robot"|| msg.body == "bot ya" || msg.body == "kamu bot") {
     client.sendMessage(msg.from, "iya")
   }
- else if (msg.body == "p" ||
-    msg.body === "assalamualaikum") {
+  else if (msg.body == "p") {
     // Send a new message to the same chat
     client.sendMessage(msg.from, "Iya?");
   } 
-   else if (msg.body == "!help") {
+  else if (msg.body == "!help") {
     // Send a new message to the same chat
     client.sendMessage(msg.from, "Ketik !menu untuk melihat menu");
   } 
+  else if (msg.body == "!assalamualaikum") {
+    // Send a new message to the same chat
+    client.sendMessage(msg.from, "Walaikumsalam");
+  }
 
 
 });
