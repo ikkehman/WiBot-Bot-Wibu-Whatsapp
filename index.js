@@ -483,37 +483,46 @@ bot ini
 
   `);
   }
- else if (msg.body == "!randomhentai") {
-const cheerio = require('cheerio');
-const request = require('request');
 
-const { exec } = require("child_process");
-request.get({
-  headers: {'content-type' : 'application/x-www-form-urlencoded'},
-  url:     'https://api.computerfreaker.cf/v1/nsfwneko',
+ else if (msg.body == "!randomanime" ){
+    const axios = require("axios");
+    const imageToBase64 = require('image-to-base64');
+    var items = ["cute waifu", "nakano miku", "keqing genshin impact"];
+    var nime = items[Math.floor(Math.random() * items.length)];
+    var url = "http://api.fdci.se/rep.php?gambar=" + nime;
+    
+ axios.get(url)
+  .then((result) => {
+    var b = JSON.parse(JSON.stringify(result.data));
+    var cewek =  b[Math.floor(Math.random() * b.length)];
+    imageToBase64(cewek) // Path to the image
+        .then(
+            (response) => {
  
-},function(error, response, body){
-    let $ = cheerio.load(body);
-    var d = JSON.parse(body);
-console.log(d.url); 
-exec('wget "' + d.url + '" -O ok.jpg', (error, stdout, stderr) => {
-  var media = MessageMedia.fromFilePath('ok.jpg');
+    const media = new MessageMedia('image/jpeg', response);
 
-  chat.sendMessage(media);
-  if (error) {
-        console.log(`error: ${error.message}`);
-        return;
-    }
-    if (stderr) {
-        console.log(`stderr: ${stderr}`);
-        return;
-    }
-
-    console.log(`stdout: ${stdout}`);
-});
-});
+    if (nime == "nakano miku") {
+    var kata = ["Pengen cosplay in Nakano Miku 😞 ", "Nakano Miku Best Waifu. NO DEBAT !!!"];
+    var cap = kata[Math.floor(Math.random() * items.length)];
+    	client.sendMessage(msg.from, media, {
+      	caption: `${cap}` });
+    } else  {
+    	client.sendMessage(msg.from, media, {
+     	caption: `` });
 }
-else if (msg.body == "!randomanime") {
+
+            }
+        )
+        .catch(
+            (error) => {
+                console.log(error); // Logs an error if there was one
+            }
+        )
+    
+    });
+    }
+
+else if (msg.body == "!cxcxc") {
 const cheerio = require('cheerio');
 const request = require('request');
 
@@ -618,7 +627,7 @@ var isiy = data.results[0].data;
 if (isix.index_id == 2 || isix.index_id == 38 || isix.index_id == 18 || isix.index_id == 16 )
 {
 var sumber = isiy.source.replace((/ /g), "%20");
-var teks = `*Sauce Hentai*: ${isiy.source} 
+var teks = `*Judul Hentai*: ${isiy.source} 
 *Kemiripan*: ${isix.similarity}%
 *Pembuat*: ${isiy.creator[0]}
 *Link Sauce*: https://hitomi.la/search.html?${sumber}`
@@ -748,20 +757,29 @@ Made with hateful, crazy and desperate 🤪 by IkkehMan`)
 //end test 4 
 
 //start test 5
-  else if (caption == '!sticker')
+  else if (msg.body == '!sticker')
       {
-         const buffer = await conn.downloadMediaMessage(m) 
-         const stiker = await conn.downloadAndSaveMediaMessage(m) // to decrypt & save to file
-
-         const
-         {
-            exec
-         } = require("child_process");
-         exec('cwebp -q 50 ' + stiker + ' -o anime/' + jam + '.webp', (error, stdout, stderr) =>
-         {
-            let stik = fs.readFileSync('anime/' + jam + '.webp')
-            conn.sendMessage(id, stik, MessageType.sticker)
-         });
+      	const quotedMsg = await msg.getQuotedMessage();
+        if (msg.hasMedia && type == 'video') {
+          return await sendSticker.sendAnimatedSticker(message)
+      } else if (msg.hasMedia && type == 'image') {
+        const mediaData = await decryptMedia(message)
+        const imageBase64 = `data:${mimetype};base64,${mediaData.toString('base64')}`
+        const baseImg = imageBase64.replace('video/mp4','image/gif')
+        await client.sendImageAsSticker(from, baseImg)
+    } else if (quotedMsg && quotedMsg.type == 'image') {
+      const mediaData = await decryptMedia(quotedMsg)
+      const imageBase64 = `data:${quotedMsg.mimetype};base64,${mediaData.toString('base64')}`
+      await client.sendImageAsSticker(from, imageBase64)
+} else if (quotedMsg && quotedMsg.type == 'video') {
+             if (quotedMsg.duration < 15) {
+            sendSticker.sendAnimatedSticker(quotedMsgObj)
+            } else {
+            msg.reply('The given file is too large for converting')
+            } 
+} else {
+  msg.reply('The given file is too large for converting')
+    }
       }
 
 //end test 5
@@ -799,7 +817,10 @@ Made with hateful, crazy and desperate 🤪 by IkkehMan`)
     // Send a new message to the same chat
     client.sendMessage(msg.from, "Walaikumsalam");
   }
-
+else if (msg.body == "!randomhentai") {
+    // Send a new message to the same chat
+    client.sendMessage(msg.from, "menu !randomhentai sementara non aktif");
+  }
 
 });
 
