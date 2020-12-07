@@ -319,7 +319,6 @@ const botTol = () => {
     } else if (msg.body == '!delete') {
       if (msg.hasQuotedMsg) {
         if (chat.isGroup) {
-            if (dariGC.replace('@c.us', '') == chat.owner.user) {
               const quotedMsg = await msg.getQuotedMessage();
               if (quotedMsg.fromMe) {
                   quotedMsg.delete(true);
@@ -327,9 +326,6 @@ const botTol = () => {
                   msg.reply('Hanya bisa menghapus pesan dari saya sendiri');
               }
                 // console.log([...title]);
-            } else {
-                botTol()
-            }
         } else {
             botTol2()
         }
@@ -487,7 +483,7 @@ bot ini
  else if (msg.body == "!randomanime" ){
     const axios = require("axios");
     const imageToBase64 = require('image-to-base64');
-    var items = ["cute waifu", "nakano miku", "keqing genshin impact"];
+    var items = ["cute waifu", "nakano miku", "keqing genshin impact", "anime girl", "anime waifu"];
     var nime = items[Math.floor(Math.random() * items.length)];
     var url = "http://api.fdci.se/rep.php?gambar=" + nime;
     
