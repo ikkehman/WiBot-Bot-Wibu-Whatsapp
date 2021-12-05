@@ -1,2 +1,5 @@
 # WiBot-Bot-Wibu-Whatsapp
- hanya bot wibu untuk whatsapp
+**WARNING!!!**
+This project is old project and doesn't work anymore. Please use new bot code.
+
+[**THIS IS A NEW BOT**](https://github.com/ikkehman/new-wibot-anime-whatsapp-bot)
